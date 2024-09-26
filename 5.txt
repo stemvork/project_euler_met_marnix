@@ -1,0 +1,8 @@
+priemfactoren van 1 t/m 10 opschrijven
+dan steeds de hoogste exponent per factor bewaren
+alle factoren tot de macht die exponent keer elkaar
+
+bijv. voor 10! krijgen we 2**3 * 3**2 * 5 * 7
+
+gevraagd is voor 20!
+2**4 * 3 ** 2 * 5 * 7 * 11 * 13 * 17 * 19 = 232792560
