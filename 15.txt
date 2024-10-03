@@ -1,0 +1,2 @@
+This is just 40 choose 20 (combination).
+40C20 = 137846528820
