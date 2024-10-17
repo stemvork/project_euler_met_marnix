@@ -35,14 +35,12 @@ let numberToString = {
 }
 
 function getAmountOfChars(n){
-    let digits = n.toString().split("").map(x => Number(x)).reverse(); //lowest orders of magnitudes up front
+    let digits = n.toString().split("").map(x => Number(x)).reverse(); //lowest orders of magnitude up front
     let length = 0;
-    let string = ""
 
     for(var i = 0; i < digits.length; i++){
         if(i == 0){
-            let stringToAdd = numberToString[digits[i]];
-            length += stringToAdd.length;
+            length += numberToString[digits[i]].length;
         } else if(i == 1){
             length += numberToString[digits[i] * 10].length;
             if(digits[1] == 1){
