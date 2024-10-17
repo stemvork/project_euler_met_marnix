@@ -1,68 +1,72 @@
-const words = {
-	0: "",
-	1: "one",
-	2: "two",
-	3: "three",
-	4: "four",
-	5: "five",
-	6: "six",
-	7: "seven",
-	8: "eight",
-	9: "nine",
+
+
+
+let numberToString = {
+    0: "",
+    1: "one",
+    2: "two",
+    3: "three",
+    4: "four",
+    5: "five",
+    6: "six",
+    7: "seven",
+    8: "eight",
+    9: "nine",
+    10: "ten",
+    11: "eleven",
+    12: "twelve",
+    13: "thirteen",
+    14: "fourteen",
+    15: "fifteen",
+    16: "sixteen",
+    17: "seventeen",
+    18: "eighteen",
+    19: "nineteen",
+    20: "twenty",
+    30: "thirty",
+    40: "forty",
+    50: "fifty",
+    60: "sixty",
+    70: "seventy",
+    80: "eighty",
+    90: "ninety",
+    100: "hundred",
+    1000: "thousand"
 }
 
-const t_words = {
-	0: "",
-	1: "ten",
-	2: "twenty",
-	3: "thirty",
-	4: "forty",
-	5: "fifty",
-	6: "sixty",
-	7: "seventy",
-	8: "eighty",
-	9: "ninety",
+function getAmountOfChars(n){
+    let digits = n.toString().split("").map(x => Number(x)).reverse(); //lowest orders of magnitude up front
+    let length = 0;
+
+    for(var i = 0; i < digits.length; i++){
+        if(i == 0){
+            length += numberToString[digits[i]].length;
+        } else if(i == 1){
+            length += numberToString[digits[i] * 10].length;
+            if(digits[1] == 1){
+                //11-19 are special cases
+                length = 0;
+                length += numberToString[10 + digits[0]].length;
+            }
+        } else if(i == 2){
+            if(digits[0] > 0 || digits[1] > 0){
+                length += 3 //'and' is put in between.
+            }
+            if(digits[2] > 0){
+                length += numberToString[digits[i]].length + numberToString[100].length;
+            }
+        } else if(i == 3){
+            if(digits[3] > 0){
+                length += numberToString[1000].length + 3;
+            }
+        }
+    }
+    return length;
 }
 
-const tt_words = {
-	0: "ten",
-	1: "eleven",
-	2: "twelve",
-	3: "thirteen",
-	4: "fourteen",
-	5: "fifteen",
-	6: "sixteen",
-	7: "seventeen",
-	8: "eighteen",
-	9: "nineteen",
-};
-
-function numberWord(n) {
-	const hundreds = Math.floor(n/100);
-	const tens = Math.floor((n%100)/10);
-	const units = n%10;
-	if(n === 1000) return "one thousand";
-	if(tens === 1 && hundreds === 0) return tt_words[units];
-	if(tens === 1) return `${words[hundreds]} hundred and ${tt_words[units]}`;
-	if(units === 0 && tens === 0) return `${words[hundreds]} hundred`;
-	if(hundreds === 0) return `${t_words[tens]} ${words[units]}`;
-	if(hundreds > 0) return `${words[hundreds]} hundred and ${t_words[tens]} ${words[units]}`;
-	return `${t_words[tens]} ${words[units]}`;
+let sum = 0;
+for(var i = 1; i <= 1000; i++){
+    sum += getAmountOfChars(i);
 }
 
-function getLetterLength(n) {
-	const word = numberWord(n);
-	// console.log(n, word);
-	const f_word = word.split('').filter(x => x !== " " && x !== "-").join("");
-	console.log(n, f_word.length, f_word);
-	return f_word.length;
-}
-
-//console.log(getLetterLength(342));
-//console.log(getLetterLength(115));
-
-let total = 0;
-for(let i=1; i<=1000; i++) {
-	total += getLetterLength(i);
-}
-console.log(`Total: ${total}`);
+console.log(sum);
