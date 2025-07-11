@@ -51,16 +51,42 @@ function candidate_squares(word) {
 }
 //console.assert(candidate_squares("ON") === [10, 99]);
 
-const get_unique_char_count = (word) => Array.from(new Set(word.split(''))).join("").length;
+const get_unique_chars = (word) => 
+    Array.from(new Set(word.split(''))).join("");
+const get_unique_char_count = (word) => get_unique_chars(word).length;
 console.assert(get_unique_char_count("CARE") === 4);
 
-function is_square(word) {
+const get_iterator = (word) => {
     const candidates = Array(10).fill(null).map((x, i) => i);
     const n = get_unique_char_count(word);
-    for(const x of new $C.Permutation(candidates, n)) {
-        // if(x[0] !== 0) console.log(x);
-        // TODO: assign these numbers to the word and the permutation(!) and check that both numbers are square
-    }
-    return false;
+    return new $C.Permutation(candidates, n);
 }
-console.log(is_square("CARE"));
+
+function get_max_square(a, b) {
+    const mappings = [];
+    const letters_a = get_unique_chars(a).split('');
+    for(const x of get_iterator(a)) {
+        // TODO: assign these numbers to the word and the permutation(!) and check that both numbers are square
+        if(x[0] === 0) continue;
+        const y = parseInt(x.join(""));
+        if(y - Math.round(Math.sqrt(y))**2 !== 0) continue;
+        //const digits = mapping.toString().split('');
+        const mapping = Object.fromEntries(letters_a.map((l, li) => [l, x[li]]));
+        const number_b = parseInt(b.split('').map((c, ci) => {
+            if(ci === 0 && mapping[c] === 0) return false;
+            return mapping[c];
+        }).join(""));
+        //console.log(number_b);
+        if(number_b - Math.round(Math.sqrt(number_b))**2 !== 0) continue;
+        mappings.push([y, number_b]);
+    }
+    return Math.max(...(mappings.flat()));
+}
+console.assert(get_max_square("CARE", "RACE") === 9216);
+
+let max = 0;
+for(const [a, b] of anagram_pairs) {
+    const s = get_max_square(a, b);
+    if(s > max) max = s;
+}
+console.log(max);
