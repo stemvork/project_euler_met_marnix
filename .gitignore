@@ -1,0 +1,6 @@
+.python-version
+README.md
+main.py
+uv.lock
+pyproject.toml
+__pycache__/
