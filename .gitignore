@@ -4,3 +4,4 @@ main.py
 uv.lock
 pyproject.toml
 __pycache__/
+*.bak
