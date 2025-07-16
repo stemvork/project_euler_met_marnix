@@ -13,7 +13,9 @@ def S(n):
     result = 0
     for x in range(10**n):
         if is_ds(x): result += x
+    print(result)
     return result
 assert S(2) == 495
 assert S(3) == 63270
+assert S(4) == 1749825
 # assert S(7) == 85499991450
