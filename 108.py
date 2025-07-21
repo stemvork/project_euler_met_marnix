@@ -13,7 +13,8 @@ assert dphr(4) == 3
 
 n = 4
 divs = 3
-while divs <= 1000:
+N = 1000
+while divs <= N:
     n += 1
     divs = dphr(n)
 print(n)
